@@ -1,0 +1,82 @@
+.page {
+  --gray-rgb: 0, 0, 0;
+  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
+  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
+
+  --button-primary-hover: #383838;
+  --button-secondary-hover: #f2f2f2;
+
+  display: grid;
+  grid-template-rows: 90% 10%;
+  align-items: center;
+  justify-items: center;
+  min-height: 100svh;
+  font-family: var(--font-geist-sans);
+}
+
+@media (prefers-color-scheme: dark) {
+  .page {
+    --gray-rgb: 255, 255, 255;
+    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
+    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
+
+    --button-primary-hover: #ccc;
+    --button-secondary-hover: #1a1a1a;
+  }
+}
+
+.main {
+  grid-row-start: 1;
+  display: grid;
+  gap: 32px;
+  grid-template-columns: 100%;
+  grid-template-rows: 10% 90%;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+
+.taskInputCta {
+  grid-row-start: 1;
+  display: flex;
+  gap: 32px;
+  align-self: center;
+  justify-content: center;
+  height: max-content;
+}
+
+.todosList {
+  grid-row-start: 2;
+  justify-content: center;
+  width: 100%;
+  height: 95%;
+  overflow-y: scroll;
+  font-family: var(--font-geist-mono);
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  list-style: none;
+}
+
+.todosListItem {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.todosListItem:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.todosListCompletedItem {
+  text-decoration: line-through;
+  color: #616161;
+}
+
+.footer {
+  grid-row-start: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
