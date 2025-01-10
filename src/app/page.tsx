@@ -1,7 +1,7 @@
 "use client"
 
 import styles from "./page.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TodosEl from "./components/todos";
 
 export type Todo = {
@@ -12,6 +12,26 @@ export type Todo = {
 export default function Home() {
   const [currentTask, setCurrentTask] = useState<string>("");
   const [todos, addTodo] = useState<Todo[]>([]);
+
+  useEffect(() => {
+    const fetchTodos = async () => {
+      try {
+        const response = await fetch("/api/todos");
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch todos");
+        }
+
+        const data = await response.json();
+
+        addTodo(data.todos);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchTodos();
+  }, []);
 
   const addNewTodoHandler = () => {
     if (currentTask) {
