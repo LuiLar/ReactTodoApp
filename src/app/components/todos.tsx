@@ -6,7 +6,7 @@ interface TodosElProps {
   todos: Todo[];
   completeHandlerFunc: (index: number) => void;
   removeHandlerFunc: (index: number) => void;
-};
+}
 
 const TodosEl = ({ todos, completeHandlerFunc, removeHandlerFunc }: TodosElProps) => (
   <section className={styles.todosList}>
