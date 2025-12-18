@@ -1,9 +1,11 @@
-import { todos } from "@/todos";
+export const GET = async () => {
+  const response = await fetch("http://localhost:3000/todos.json");
 
-export const dynamic = "force-static";
+  if (!response.ok) {
+    throw new Error("Failed to fetch todos");
+  }
 
-export async function GET() {
-  return new Response(JSON.stringify({ todos }), {
+  return new Response(response.body, {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });

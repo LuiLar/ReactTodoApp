@@ -2,7 +2,6 @@
 
 import { createContext, useEffect, useState } from "react";
 import { type Todo } from "../types";
-import { fetchTodos } from "../services/todosApi";
 
 interface TodosContextType {
   todos: Todo[];
@@ -27,7 +26,8 @@ const TodosProvider = ({ children }: { children: React.ReactNode }) => {
   const [todos, addTodo] = useState<Todo[]>([]);
 
   useEffect(() => {
-    fetchTodos()
+    fetch("./api/todos")
+      .then((res) => res.json())
       .then((fetchedTodos) => addTodo(fetchedTodos))
       .catch((e) => console.error(e));
   }, []);
