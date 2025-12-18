@@ -1,60 +1,19 @@
-"use client"
+"use client";
 
 import styles from "./page.module.css";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import TodosEl from "./components/todos";
-
-export type Todo = {
-  task: string;
-  completed?: boolean;
-}
+import { TodosContext } from "./providers/TodosProvider";
 
 export default function Home() {
-  const [currentTask, setCurrentTask] = useState<string>("");
-  const [todos, addTodo] = useState<Todo[]>([]);
-
-  useEffect(() => {
-    const fetchTodos = async () => {
-      try {
-        const response = await fetch("/api/todos");
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch todos");
-        }
-
-        const data = await response.json();
-
-        addTodo(data.todos);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
-    fetchTodos();
-  }, []);
-
-  const addNewTodoHandler = () => {
-    if (currentTask) {
-      addTodo([...todos, { task: currentTask }]);
-      setCurrentTask("");
-    }
-  }
-
-  const completeTodoAt = (index: number) => {
-    const newTodos = todos.map((todo, i) => {
-      if (i === index) {
-        return { ...todo, completed: true };
-      }
-      return todo;
-    });
-
-    addTodo(newTodos);
-  }
-
-  const removeTodoAt = (index: number) => {
-    const newTodos = todos.filter((_, i) => i !== index);
-    addTodo(newTodos);
-  }
+  const {
+    todos,
+    currentTask,
+    setCurrentTask,
+    addNewTodoHandler,
+    completeTodoAt,
+    removeTodoAt,
+  } = useContext(TodosContext);
 
   return (
     <div className={styles.page}>

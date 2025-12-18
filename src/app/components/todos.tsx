@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "../page.module.css";
-import { Todo } from "../page";
+import { type Todo } from "../types";
 
 interface TodosElProps {
   todos: Todo[];
@@ -8,11 +8,17 @@ interface TodosElProps {
   removeHandlerFunc: (index: number) => void;
 }
 
-const TodosEl = ({ todos, completeHandlerFunc, removeHandlerFunc }: TodosElProps) => (
+const TodosEl = ({
+  todos,
+  completeHandlerFunc,
+  removeHandlerFunc,
+}: TodosElProps) => (
   <section className={styles.todosList}>
     {todos.map(({ task, completed }, index) => (
       <div key={index} className={styles.todosListItem}>
-        <p className={completed && styles.todosListCompletedItem || ""}>{task}</p>
+        <p className={(completed && styles.todosListCompletedItem) || ""}>
+          {task}
+        </p>
 
         {!completed && (
           <button onClick={() => completeHandlerFunc(index)}>
