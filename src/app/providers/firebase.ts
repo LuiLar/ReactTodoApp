@@ -3,13 +3,12 @@ import { getFirestore, collection, doc, getDocs, addDoc, updateDoc, deleteDoc } 
 import { Todo } from "../types";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCa6eKoCuvrmDYuiN9b_qI-k-7nwccL8zw",
-  authDomain: "todosapp-a7e16.firebaseapp.com",
-  projectId: "todosapp-a7e16",
-  storageBucket: "todosapp-a7e16.firebasestorage.app",
-  messagingSenderId: "306696809491",
-  appId: "1:306696809491:web:e34a0ca0c78ea756efa3e6",
-  measurementId: "G-Z0Y7DTNNWB"
+  apiKey: process.env.FIREBASE_WEB_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);
