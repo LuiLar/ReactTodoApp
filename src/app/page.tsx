@@ -1,39 +1,24 @@
-"use client";
-
 import styles from "./page.module.css";
-import { useContext } from "react";
 import TodosEl from "./components/todos";
-import { TodosContext } from "./providers/TodosProvider";
+import { addNewTodo, fetchTodos } from "./services/todosApi";
 
-export default function Home() {
-  const {
-    todos,
-    currentTask,
-    setCurrentTask,
-    addNewTodoHandler,
-    completeTodoAt,
-    removeTodoAt,
-  } = useContext(TodosContext);
+export default async function Home() {
+  const todos = await fetchTodos();
 
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <section className={styles.taskInputCta}>
+        <form action={addNewTodo} className={styles.taskInputCta}>
           <input
+            name="task"
             type="text"
             placeholder="Task"
-            value={currentTask}
-            onChange={(e) => setCurrentTask(e.target.value)}
           />
 
-          <button onClick={addNewTodoHandler}>Add</button>
-        </section>
+          <button>Add</button>
+        </form>
 
-        <TodosEl
-          todos={todos}
-          completeHandlerFunc={completeTodoAt}
-          removeHandlerFunc={removeTodoAt}
-        />
+        <TodosEl todos={todos} />
       </main>
 
       <footer className={styles.footer}>

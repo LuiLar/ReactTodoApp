@@ -1,34 +1,35 @@
-import Image from "next/image";
+import { Suspense } from "react";
 import styles from "../page.module.css";
 import { type Todo } from "../types";
+import TodoActions from "./todoActions";
+import { removeTodo, updateTodo } from "../services/todosApi";
 
 interface TodosElProps {
   todos: Todo[];
-  completeHandlerFunc: (index: number) => void;
-  removeHandlerFunc: (index: number) => void;
 }
 
-const TodosEl = ({
-  todos,
-  completeHandlerFunc,
-  removeHandlerFunc,
-}: TodosElProps) => (
+const TodosEl = ({ todos }: TodosElProps) => (
   <section className={styles.todosList}>
-    {todos.map(({ task, completed }, index) => (
-      <div key={index} className={styles.todosListItem}>
+    {todos.map(({ id, task, completed }) => (
+      <div key={id} className={styles.todosListItem}>
         <p className={(completed && styles.todosListCompletedItem) || ""}>
           {task}
         </p>
 
-        {!completed && (
-          <button onClick={() => completeHandlerFunc(index)}>
-            <Image src="/check.svg" alt="Complete" width={20} height={20} />
-          </button>
-        )}
-
-        <button onClick={() => removeHandlerFunc(index)}>
-          <Image src="/delete.svg" alt="Delete" width={20} height={20} />
-        </button>
+        <Suspense>
+          <TodoActions
+            id={id || ""}
+            completed={!!completed}
+            completeHandlerFunc={async (id) => {
+              "use server";
+              await updateTodo(id);
+            }}
+            removeHandlerFunc={async (id) => {
+              "use server";
+              await removeTodo(id);
+            }}
+          />
+        </Suspense>
       </div>
     ))}
   </section>
